@@ -1,0 +1,89 @@
+一、学习Websocket原理时，对于socket.io原理不清楚。
+	想到用 swoole，然后文档说，swoole又不支持 windows, 但是可以在WSL环境运行。
+	
+	然后看学院君的文档，操作了一下流程，安装了swoole， 实验Websocket原理（订阅&广播）
+
+
+
+
+一、在win10上基于WSL环境 安装swool扩展
+	1、
+	
+	
+	
+	5、sudo apt install php-dev
+	6、sudo apt install php-fpm
+	
+	
+	
+	WSL swoole官网的安装方法
+		apt-get install php7.2 php7.2-curl php7.2-gd php7.2-gmp php7.2-json php7.2-mysql php7.2-opcache php7.2-readline php7.2-sqlite3 php7.2-tidy php7.2-xml  php7.2-bcmath php7.2-bz2 php7.2-intl php7.2-mbstring  php7.2-mcrypt php7.2-soap php7.2-xsl  php7.2-zip
+		pecl install swoole
+		echo 'extension=swoole.so' >> /etc/php/7.2/mods-available/swoole.ini
+		cd /etc/php/7.2/cli/conf.d/ && ln -s ../../mods-available/swoole.ini 20-swoole.ini
+		cd /etc/php/7.2/fpm/conf.d/ && ln -s ../../mods-available/swoole.ini 20-swoole.ini
+	
+	
+	====================================================
+	
+		sudo sh -c "echo 'extension=swoole.so' >> /etc/php/7.2/mods-available/swoole.ini"
+		cd /etc/php/7.2/cli/conf.d/ && sudo ln -s /etc/php/7.2/mods-available/swoole.ini 20-swoole.ini
+		cd /etc/php/7.2/fpm/conf.d/ && sudo ln -s /etc/php/7.2/mods-available/swoole.ini 20-swoole.ini
+		
+		
+		
+		
+		2023-06-27：
+			----------------------------------------------------------------------
+			Libraries have been installed in:
+			   /tmp/pear/temp/pear-build-rootNpUHqw/swoole-4.8.13/modules
+			
+			If you ever happen to want to link against installed libraries
+			in a given directory, LIBDIR, you must either use libtool, and
+			specify the full pathname of the library, or use the '-LLIBDIR'
+			flag during linking and do at least one of the following:
+			   - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+			     during execution
+			   - add LIBDIR to the 'LD_RUN_PATH' environment variable
+			     during linking
+			   - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+			   - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+			
+			See any operating system documentation about shared libraries for
+			more information, such as the ld(1) and ld.so(8) manual pages.
+			----------------------------------------------------------------------
+			
+			Build complete.
+			Don't forget to run 'make test'.
+			
+			running: make INSTALL_ROOT="/tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13" install
+			Installing shared extensions:     /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/lib/php/20170718/
+			Installing header files:          /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/
+			running: find "/tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13" | xargs ls -dils
+			51871     4 drwxr-xr-x 3 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13
+			52185     4 drwxr-xr-x 4 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr
+			52189     4 drwxr-xr-x 3 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include
+			52190     4 drwxr-xr-x 3 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php
+			52191     4 drwxr-xr-x 3 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718
+			52192     4 drwxr-xr-x 3 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext
+			52193     4 drwxr-xr-x 5 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext/swoole
+			52199     8 -rw-r--r-- 1 root root     5471 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext/swoole/config.h
+			52194     4 drwxr-xr-x 2 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext/swoole/ext-src
+			52195     4 drwxr-xr-x 2 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext/swoole/include
+			52200     4 -rw-r--r-- 1 root root     2176 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext/swoole/php_swoole.h
+			52196     4 drwxr-xr-x 4 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext/swoole/thirdparty
+			52198     4 drwxr-xr-x 2 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext/swoole/thirdparty/hiredis
+			52197     4 drwxr-xr-x 2 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/include/php/20170718/ext/swoole/thirdparty/nghttp2
+			52186     4 drwxr-xr-x 3 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/lib
+			52187     4 drwxr-xr-x 3 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/lib/php
+			52188     4 drwxr-xr-x 2 root root     4096 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/lib/php/20170718
+			52183 37640 -rwxr-xr-x 1 root root 38541024 Jun 27 13:44 /tmp/pear/temp/pear-build-rootNpUHqw/install-swoole-4.8.13/usr/lib/php/20170718/swoole.so
+			
+			Build process completed successfully
+			Installing '/usr/lib/php/20170718/swoole.so'
+			Installing '/usr/include/php/20170718/ext/swoole/php_swoole.h'
+			Installing '/usr/include/php/20170718/ext/swoole/config.h'
+			install ok: channel://pecl.php.net/swoole-4.8.13
+			configuration option "php_ini" is not set to php.ini location
+			You should add "extension=swoole.so" to php.ini
+

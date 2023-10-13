@@ -1,0 +1,12 @@
+ssh-keygen -t rsa -f gogs.rsa -m PEM
+
+ssh-keygen -t ecdsa -f gogs.ecdsa -m PEM
+
+ssh-keygen -t ed25519 -f gogs.ed25519 -m PEM
+
+
+
+
+https://www.jianshu.com/p/bdc9d76da3f1
+
+/c/Users/Administrator/.ssh/id_rsa

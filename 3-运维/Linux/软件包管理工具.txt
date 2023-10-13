@@ -1,0 +1,20 @@
+1. rpm
+
+
+2. yum（dnf）
+	DNF（Dandified YUM）是新一代的 RPM 软件包管理器，它旨在解决 YUM 的已知问题，并增加一些新的特性。DNF 基于 libdnf，是 Fedora 18 及之后的版本、RHEL 7.4 及之后的版本以及 CentOS 7 的默认软件包管理器。
+	DNF 的全称是 Dandified YUM，其中 YUM 是 Yellowdog Updater, Modified 的缩写。
+
+
+
+3. apt-get（Advanced Package Tool） (Debian系统)
+	Ubuntu中使用的软件管理工具主要有两个：dpkg和apt。
+	
+	dpkg是Debian系列操作系统中用于安装和管理软件包的工具，它能够处理以.deb为后缀的软件包。dpkg提供了安装、卸载、查询和管理软件包的功能。
+	
+	apt是Advanced Package Tool的缩写，它是Debian和Ubuntu等基于Debian的系统上用于管理软件包的工具。apt比dpkg功能更强大，它能够解决软件包之间的依赖关系问题，并提供从互联网的软件仓库中搜索、下载、安装、升级和卸载软件包的功能。
+	
+	在Ubuntu中，通常使用apt作为主要的软件管理工具，而dpkg则主要用于处理本地的.deb文件。
+	
+	
+	

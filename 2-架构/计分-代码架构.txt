@@ -1,0 +1,151 @@
+1、表结构设计：
+	计分系统 现有表这样设计的原因；自己根据实际需求如何设计表结构。
+	(1)基础信息表是第一步
+	(2)关系表的来源：
+		仅有基础信息表是不够的，基础信息表只是一个基础信息记录。
+		寻找关系表，分析关系表。关系表【场景&业务&逻辑 闭环的灵魂。完整闭环核心桥梁】
+			表的由来是怎么产生的？[关系表的由来不是凭空而来，例如 runner(参赛)、runners(场次)，是业务流程闭环走通需要的]
+			数据来源是哪里？
+			数据会用在哪里？关联查询
+			
+	match_id：赛事id
+	project_id：赛目/组别id
+	team_id：选手/队员 id
+	packet_id：分组id
+	group_id：场次id
+	名词含义：
+		赛事(match)、 赛程(场次的列表)、 比赛单元(grouptype)、 场序/次(group 场)、 组别/赛目(project)
+			
+			
+2、WebSocket通信架构：
+	node[client] <---> node[server]
+	
+	php[client]
+		利用curl请求node[server]
+		node[server] app.js中利用express框架，解析subscriptionHook
+		
+	node的本质做的是通讯的传输，client发起(emit)，server监听(on)/server广播(broadcast)---> 同一房间的或者所有链接的client
+	
+
+
+3、Thinkphp3.2M-V-C架构：(基于ng-route 渲染数据展示view，使用/Public/controller/base.js改造机制和requireJS异步加载文件)
+	(1)数据库match的匹配，底层做了基于当前库match读取，强制更改库名 [ThinkPHP/Library/Think/App.class.php :68]
+	(2)controller
+		方法不存在时，只要模板路径有，底层会自动加载模板文件
+		方法不存在时，如果有Index方法会走该方法，底层默认配置
+	(3) <思考，如何加载的view以及对应的js文件>，【js文件请求的发起】：通过AngularJS route，路由代码逻辑兼容，使用getRequire，加载
+		var purl1 = 'controller/'+$stateParams.c+'/'+$stateParams.a;
+		[使用/Public/controller/base.js改造机制和requireJS异步加载文件]
+		/Public/controller/base.js的getRequire()方法，requireJS的baseUrl配置了 baseUrl: TP.PUBLIC+'/'
+		
+	(4)/Public/controller/xxx/xxx.js文件的加载机制：
+		通过script标签src 发起请求后，通过index.php底层映射到 Application/Api/Controller/JavascriptController.class.php  检查文件存在加载机制
+		$cp = 'Public/controller/'.$c.'.js';
+		$cp2 = 'Public/controller/'.$c.'/'.$a.'.js';
+		if(file_exists($cp2)){
+			echo file_get_contents($cp2);
+			exit;
+		}
+		if(file_exists($cp)){
+			echo file_get_contents($cp);
+			
+		
+	(5) 这些表走主库，其它表按赛事生成数据记录
+		ThinkPHP/Library/Think/Model.class.php
+		【
+			'material','match','user','music','device','devicename','musicclass',
+			'printway','scoringway','export','print_template','print','reward'
+		】
+		if(!$connection){
+			if(!in_array(strtolower($this->name),['material','match','user','music','device','musicclass','printway','scoringway','export','print_template','print','devicename','reward'])){
+				$connection = MASTER_MATCH_DB_URI;
+			}
+		}
+
+
+4、###### START 打分/评分 总排名 START ######：【
+		评分本质 ---> mark表是在淘汰赛/晋级环节的数据，展示出来的是选手背号； 
+		决赛：展示出来的是最终的排名，各个裁判直接排名，统计每个舞种的各个裁判给出的排名。
+	】
+	1、裁判进入首页时，index 控制器加载了 sortmethod相关的js文件（该js文件在服务端！） Application/Referee/Controller/RefereeController.class.php  ---> index()
+	
+	2、裁判打分操作 点击 fn.codeClick(v)（服务端的table.html）， .emit('setScore') 发送事件（服务端的js文件，） app.js .on('setScore')监听，保存打分数据结构 var score = {}
+		裁判打分操作， .emit('getScore') 发送事件（服务端的js文件，） app.js .on('getScore')监听，保存打分数据结构 var score = {}
+	
+	3、主持人点击进入下一场， (Application/Referee/Controller/JudgeController.class.php  setGroupState)服务端一个方法syncScore($id),
+	   ($SS = new \Socket\send; $scire = $SS->getScore($gid,$pid);)
+		
+		app.js 中有个 .on('getScore') 方法
+	
+	待核实：
+		/*推送端从服务器同步分数*/  /*让推送端重新同步服务器分数*/
+		app.js ---> getServerScore(); 
+		.post(SR+'getScore')[http://127.0.0.1/Admin/Io/]
+		
+		socket.on('setScore'
+			io.to('subscription:'+'setScore').emit('subscription:'+'setScore',emitData);
+			
+			
+	分数- 数据格式/层次 / 结构： score[groupId][packetId][musicKey][refereeId].data = data;
+	
+	2023.08.31 核实获取打分的逻辑:
+		Application\Referee\View\Referee\index.html[<div ng-include="U('getTable',{id:p.id})"></div>]
+		中引入了PHP后端目录下的代码：
+			ThinkPHP/Library/ScoringMethod/Method/Mark/table.html
+			ThinkPHP/Library/ScoringMethod/Method/Mark/table.js
+	【
+		本质是：nodejs服务未中断，裁判选中背号时，数据都保存在运行中的nodejs一个全局变量 var score={}中，
+		nodejs 服务中断有，exit和sigint。score中的数据 会记录到磁盘文件中，
+		fs.writeFileSync(__dirname+'/backups/'+name+(type?'.'+type:'')+'.json',JSON.stringify(score,null,2));
+	】
+		app.js：
+			getServerScore
+			http://127.0.0.1/Admin/Io/getScore
+		
+
+###### END 打分/评分 总排名 END ######
+
+
+
+4、AngularJS：
+	ng-route 以及 功能中 使用的各种插件， bower.json中查看
+	通过对插件功能的了解，【在github上搜索vue通用功能的插件】，培养在github上找到 插件
+	
+
+
+5、后台列表用的是Model/index.html 公用的列表， public/controller/model.js 公用的js, 列表的字段和按钮，都是Model类定义返回的！
+   在列表页，右侧显示 编辑页，是通过布局的形式展现的，加载模版后，通过后台返回的html，更新预定义放模版的区块！
+   View/Model/index.html 中的 <div class="box-body" string-html="formHtml"> </div>
+   
+
+   
+部署环境遇到的问题：
+【
+	1. 2023.06.15 [说看看线上有哪些服务在运行，仿照着搭建本地运行环境]
+		(1) 搭建基础环境，域名指向配置完以后，运行 node index.js 提示 502。。，后面询问，说让看线上的Nginx怎么配置的
+			[当时由于是全新电脑，{也算是巧合了，系统不能有其它80端口的项目}]
+
+	2. 2023.07.15 山东聊城赛，成绩上传报错，由于内容里面有 "--" 导致上传数据报错。 在mac上搭建环境时，折腾了一天
+		(1) 由于mac上已经有其它项目 :80端口，当时怎么就是访问不通
+		(2) node index.js 也是无法运行起来
+		(3) 部署 websocket时，由于会通过 http://127.0.0.1/Admin/Io/test 校验服务器，
+			访问 http://127.0.0.1 时，默认监听的是 :80端口，因为访问的IP，所以只能有一个监听:80端口的程序
+			电脑如果有多个项目，其它项目要用监听其它端口的形式监听 :8081 等， 
+			目的是: 如果直接通过IP地址访问时，不是通不本地域名访问的，所以其它监听:80端口的应用会影响 访问 websocket
+			因为，直接访问IP时，默认会进入到监听:80端口的目录地址
+			127.0.0.1 devjf.loc #该域名手动配置，不要在小皮上添加,是因为，访问 node服务器时，/io，使用了Nginx做的服务代理，升级为WebSocket链接！！！
+		
+	3. 2023.08.19 SSD正大广场赛事现场，在自己win电脑上搭建环境遇到问题。 当时由于复制本地代码过大，法不出去，然后从git下载的代码。
+		(1) git 下载代码时， 由于TP的链接数据库的配置文件没有在git , public的bower_composer文件, WebSocket的 node目录都没有在git版本控制里面；
+			当时访问时，提示无权限访问，【以为是，目录的权限问题，最后把缺失的文件复制过去以后，就可以了】
+		(2) node index.js 时，确保phpstudy默认网站不能是 localhost,不然会重定向到默认网站
+		(3) 20230819号 早上测试机时，【在现场时，本地电脑启动运行了node.js服务。导致裁判ipad发现了我本机的IP服务器！！！】，
+			原理，discovery.js，使用UDP协议， ipad段选择服务器时，使用UDP协议发起请求， node.js使用了包 dgram 创建UDP并返回数据
+			20230831使用了抓包工具查看，检测端口的api: GET /api/port/auto HTTP/1.1
+	
+	4. 2023.08.28
+		(1) 登录后台时，提示用户不存在， 本地装了两个数据库，其中一个数据库进程早已运行，导致链接的是之前装的数据库进程
+		(2) node index.js 时 提示[404], 就是访问 http://127.0.0.1/Admin/Io/test 无法访问成功，由于直接访问的 IP:80 端口，
+			本地不能有 localhost网站，否则就会走到这个默认网站里面
+			
+】

@@ -1,0 +1,99 @@
+* centos-sclo-rh: ftp.sjtu.edu.cn
+Resolving Dependencies
+--> Running transaction check
+---> Package gitlab-ce.x86_64 0:16.4.0-ce.0.el7 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+Package Arch Version Repository Size
+================================================================================
+Installing:
+gitlab-ce x86_64 16.4.0-ce.0.el7 gitlab-ce 1.2 G
+
+Transaction Summary
+================================================================================
+Install 1 Package
+
+Total download size: 1.2 G
+Installed size: 1.2 G
+Downloading packages:
+https://mirrors.cloud.tencent.com/gitlab-ce/yum/el7/gitlab-ce-16.4.0-ce.0.el7.x86_64.rpm: [Errno 14] HTTPS Error 404 - Not Found
+Trying other mirror.
+To address this issue please refer to the below wiki article
+
+https://wiki.centos.org/yum-errors
+
+If above article doesn't help to resolve this issue please use https://bugs.centos.org/.
+
+
+
+Error downloading packages:
+gitlab-ce-16.4.0-ce.0.el7.x86_64: [Errno 256] No more mirrors to try.
+
+/etc/gitlab/gitlab.rb: No such file or directory
+sed: can't read /etc/gitlab/gitlab.rb: No such file or directory
+正在初始化GitLab配置...
+new_gitlab.sh: line 112: gitlab-ctl: command not found
+new_gitlab.sh: line 113: gitlab-ctl: command not found
+new_gitlab.sh: line 119: /opt/gitlab/service/nginx/run: No such file or directory
+mv: cannot stat ‘/opt/gitlab/embedded/sbin/nginx’: No such file or directory
+new_gitlab.sh: line 124: gitlab-ctl: command not found
+--2023-09-26 15:21:57-- https://dg2.bt.cn/install/plugin/new_gitlab/new_gitlab_main.py
+Resolving dg2.bt.cn (dg2.bt.cn)... 36.133.1.8, 240e:a5:4200:89::256
+Connecting to dg2.bt.cn (dg2.bt.cn)|36.133.1.8|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 5583 (5.5K) [application/octet-stream]
+Saving to: ‘/www/server/panel/plugin/new_gitlab/new_gitlab_main.py’
+
+0K ..... 100% 949M=0s
+
+2023-09-26 15:21:57 (949 MB/s) - ‘/www/server/panel/plugin/new_gitlab/new_gitlab_main.py’ saved [5583/5583]
+
+--2023-09-26 15:21:57-- https://dg2.bt.cn/install/plugin/new_gitlab/icon.png
+Resolving dg2.bt.cn (dg2.bt.cn)... 36.133.1.8, 240e:a5:4200:89::256
+Connecting to dg2.bt.cn (dg2.bt.cn)|36.133.1.8|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1235 (1.2K) [image/png]
+Saving to: ‘/www/server/panel/plugin/new_gitlab/icon.png’
+
+0K . 100% 186M=0s
+
+2023-09-26 15:21:57 (186 MB/s) - ‘/www/server/panel/plugin/new_gitlab/icon.png’ saved [1235/1235]
+
+--2023-09-26 15:21:57-- https://dg2.bt.cn/install/plugin/new_gitlab/index.html
+Resolving dg2.bt.cn (dg2.bt.cn)... 36.133.1.8, 240e:a5:4200:89::256
+Connecting to dg2.bt.cn (dg2.bt.cn)|36.133.1.8|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 6988 (6.8K) [text/html]
+Saving to: ‘/www/server/panel/plugin/new_gitlab/index.html’
+
+0K ...... 100% 1.07G=0s
+
+2023-09-26 15:21:57 (1.07 GB/s) - ‘/www/server/panel/plugin/new_gitlab/index.html’ saved [6988/6988]
+
+--2023-09-26 15:21:57-- https://dg2.bt.cn/install/plugin/new_gitlab/info.json
+Resolving dg2.bt.cn (dg2.bt.cn)... 36.133.1.8, 240e:a5:4200:89::256
+Connecting to dg2.bt.cn (dg2.bt.cn)|36.133.1.8|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 406 [application/json]
+Saving to: ‘/www/server/panel/plugin/new_gitlab/info.json’
+
+0K 100% 86.6M=0s
+
+2023-09-26 15:21:57 (86.6 MB/s) - ‘/www/server/panel/plugin/new_gitlab/info.json’ saved [406/406]
+
+--2023-09-26 15:21:57-- https://dg2.bt.cn/install/plugin/new_gitlab/install.sh
+Resolving dg2.bt.cn (dg2.bt.cn)... 36.133.1.8, 240e:a5:4200:89::256
+Connecting to dg2.bt.cn (dg2.bt.cn)|36.133.1.8|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 4565 (4.5K) [application/octet-stream]
+Saving to: ‘/www/server/panel/plugin/new_gitlab/install.sh’
+
+0K .... 100% 762M=0s
+
+2023-09-26 15:21:58 (762 MB/s) - ‘/www/server/panel/plugin/new_gitlab/install.sh’ saved [4565/4565]
+
+cp: cannot create regular file ‘/www/server/panel/static/img/soft_ico/ico-gitlab.png’: No such file or directory
+|-Successify --- 命令已执行! ---

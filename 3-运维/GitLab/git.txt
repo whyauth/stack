@@ -1,0 +1,12 @@
+# 代码提交次数：19923
+git log --since=2020–01-01 --until=2020-12-31 --oneline | wc -l  
+
+# 代码改动行数 新增行数: 110万+ 删除行数 : 50万+ 总修改行数: 160万+
+git log --pretty=tformat: --since ==2020–01-01 --until=2020-12-31   --numstat | awk '{ add += $1 ; subs += $2 ; loc += $1 + $2 } END { printf "added lines: %s removed lines : %s total lines: %s\n",add,subs,loc }'
+
+# 代码改动行数（排除库目录）：新增行数: 95万+，删除行数: 30万+，总修改行数: 125万+
+git log --pretty=tformat: --since ==2020–01-01 --until=2020-12-31   --numstat -- . ":(exclude)vendor" | awk '{ add += $1 ; subs += $2 ; loc += $1 + $2 } END { printf "added lines: %s removed lines : %s total lines: %s\n",add,subs,loc }'
+
+# 代码改动行数（排除库目录和前端文件）：新增行数: 65万+，删除行数: 25万+，总修改行数: 90万+
+git log --pretty=tformat: --since ==2020–01-01 --until=2020-12-31   --numstat -- . ":(exclude)vendor" ":(exclude)public/Static" | awk '{ add += $1 ; subs += $2 ; loc += $1 + $2 } END { printf "added lines: %s removed lines : %s total lines: %s\n",add,subs,loc }'
+ 

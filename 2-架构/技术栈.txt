@@ -1,0 +1,51 @@
+	TStack:{
+		运维: gogs(git版本控制管理界面)、show-doc(接口文档)、gocron(定时任务管理端)、supervisor(常驻进程)、git自动升级/界面回滚
+		
+	}
+	
+	
+	
+	一、技术栈&实战&经验(沉淀/总结/复习)【电商】
+		基础&原理：
+			{
+				数据结构算法
+				设计模式
+				网络通信
+			}
+			1、Mysql(日志、索引、事务、锁)
+			2、Redis(队列、锁、库存、session)
+			3、Supervisor(always)常驻进程 & 基于Redis实现的队列，常驻进程消耗队列
+			4、PHP生态
+			{
+				TP/Laravel、composer、Iterator迭代器、PSR规范
+				设计模式
+			}
+		
+		实战：
+			(通用性，不局限于某公司内部的业务)，其实公司的内部业务，就可以用这些通用性方案去实现，以及解决
+			1、SSO(域名相同、域名不同) ---> 通用的实战，从工作中抽象出能 通用的实战性成果
+			2、短网址生成方案
+			
+			高并发(High Concurrency)
+			高可用(High Availability)
+			高扩展(High Scalability) / 高性能(High )
+		
+	
+	二、技术栈(目前工作需要)【赛事系统】
+		1、HTML5+CSS3(基础)
+		2、Vue(前后端分离部署、webpack打包工具)
+		3、ElementUI(组件精通+页面布局)
+		4、websocket通信&内网网络相关
+		
+	  
+	三、技术栈(前沿、面试、运用项目中)
+		1、Docker
+		2、k8s
+		3、ES
+		4、MQ中间件(rabbitMQ、RockMQ)
+		5、Nginx 配置相关
+		3、go生态(实现工具、运用项目中)
+		6、jenkins 代码自动打包、部署、发布
+		7、PHP 微服务框架相关周边
+		
+		

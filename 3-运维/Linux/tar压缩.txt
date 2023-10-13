@@ -1,0 +1,13 @@
+"Gzipped source tarball" 和 "XZ compressed source tarball" 都是用于打包和压缩源代码文件的方式。它们通常用于分发软件源代码，以便用户可以下载并编译软件。这两种格式有不同的压缩算法和文件扩展名：
+
+    Gzipped source tarball:
+        Gzipped 源代码 tarball 使用 gzip 压缩算法来压缩源代码文件。
+        压缩后的文件扩展名通常是 ".tar.gz" 或 ".tgz"。
+        你可以使用命令行工具如 "tar" 和 "gzip" 来解压和提取其中的文件，例如：tar -xzvf filename.tar.gz。
+
+    XZ compressed source tarball:
+        XZ 压缩的源代码 tarball 使用 XZ 压缩算法来压缩源代码文件，通常提供更高的压缩比。
+        压缩后的文件扩展名通常是 ".tar.xz"。
+        你可以使用命令行工具如 "tar" 和 "xz" 来解压和提取其中的文件，例如：tar -xJvf filename.tar.xz。
+
+这两种格式都允许你将多个文件和目录打包成一个单独的文件，并进行压缩，以便更容易地进行传输和分发。用户可以下载这些压缩的源代码 tarball，然后解压缩它们，以获得软件的源代码，从而可以进行编译和安装。

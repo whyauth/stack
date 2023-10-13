@@ -1,0 +1,31 @@
+研究一：
+	#!/usr/bin/expect
+
+	# 使用scp上传
+	spawn scp patch0807_002.tar.gz root@192.168.58.125:/q/data/www/offline_scoring
+
+	#等待带有password字符，并输入密码
+	expect "*password*" {send "qujifen888\r"}
+
+	#退出
+	expect eof
+
+	#ssh 连接服务器
+	spawn ssh -tt root@192.168.58.125
+
+	#等待带有password字符，并输入密码
+	expect "*password*" {send "qujifen888\r"}
+
+	#输入密码后进入网站根目录，并解压
+	expect "*#" {send "cd /q/data/www/offline_scoring \r"
+				 send "tar -xzvf patch0807_002.tar.gz \r"}
+
+
+	#退出
+	expect eof
+
+
+研究二：
+	sshpass -p qujifen888 scp patch0807_002.tar.gz root@192.168.58.125:/q/data/www/offline_scoring
+
+	sshpass -p 'qujifen888' ssh -p 22 root@192.168.58.125

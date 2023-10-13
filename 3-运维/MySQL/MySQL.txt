@@ -1,0 +1,78 @@
+sql_mode的重要性！
+
+#sql_mode=ONLY_FULL_GROUP_BY, NO_ZERO_IN_DATE, NO_ZERO_DATE, ERROR_FOR_DIVISION_BY_ZERO, NO_AUTO_CREATE_USER, NO_ENGINE_SUBSTITUTION
+
+
+替换语句：  update project set music = 'C,S,R,P,J';
+
+UPDATE project
+SET music = 
+  CONCAT_WS(',',
+    CASE WHEN music LIKE '%C%' THEN 'C' ELSE NULL END,
+    CASE WHEN music LIKE '%S%' THEN 'S' ELSE NULL END,
+    CASE WHEN music LIKE '%R%' THEN 'R' ELSE NULL END,
+    CASE WHEN music LIKE '%P%' THEN 'P' ELSE NULL END,
+    CASE WHEN music LIKE '%J%' THEN 'J' ELSE NULL END,
+    CASE WHEN music LIKE '%W%' THEN 'W' ELSE NULL END,
+    CASE WHEN music LIKE '%T%' THEN 'T' ELSE NULL END,
+    CASE WHEN music LIKE '%VW%' THEN 'VW' ELSE NULL END,
+    CASE WHEN music LIKE '%F%' THEN 'F' ELSE NULL END,
+    CASE WHEN music LIKE '%Q%' THEN 'Q' ELSE NULL END
+  );
+  
+  
+命令：
+	systemctl status mysql
+	
+	service mysqld start
+	
+	/etc/rc.d/init.d/mysqld; generated
+  
+  
+在Centos上安装mysql：（由于代码没有在外网部署，想在外网部署一个gogs版本系统，但是提供的主机中已经使用宝塔部署了mysql5.6）
+(gogs 要求最低mysql5.7+), 所以在 公司提供的服务器上操作安装，（折腾了2天，没有成功，想自己买个轻量级服务器，试试手）
+
+
+rpm -ivh package.rpm  安装的是 元数据；  yum可以从里面找到 源。 配合使用
+
+安装过程中，遇到的问题
+	https://learnku.com/articles/46661（yum module disable mysql）
+	https://www.jianshu.com/p/0e63d68b8dfe Centos8.x 安装 mysql5.7时，不兼容导入（GPG check FAILED）
+	https://cloud.tencent.com/developer/article/1886339 （rpm -i(U)vh mysql57-community-release-el7-10.noarch.rpm）
+	https://learnku.com/articles/38466 (安装步骤,重要步骤： mysql --initialize)
+
+1. 下载 MySQL yum包
+	wget http://repo.mysql.com/mysql57-community-release-el7-10.noarch.rpm
+
+2. 安装MySQL源
+	rpm -i(U)vh mysql57-community-release-el7-10.noarch.rpm
+	
+3. 安装MySQL服务端,需要等待一些时间
+	yum install -y mysql-community-server
+	
+4. mysql --initialize  要初始化数据库
+
+4-1. 启动mysql
+	systemctl start mysqld.service
+
+5.	检查是否启动成功
+	systemctl status mysqld.service
+	
+6. 获取临时密码，MySQL5.7为root用户随机生成了一个密码
+	grep 'temporary password' /var/log/mysqld.log 
+	
+	
+	
+======================================================
+
+dnf -y install mysql-server （dnf 是什么，作用是什么？）
+
+卸载MySQL仓库
+	rpm -qa | grep mysql
+
+	yum -y remove mysql57-community-release-el7-10.noarch
+	
+
+
+centos下yum方式安装mysql5.7,Error: GPG check FAILED与Unable to find a match: mysql-community-server：	
+https://blog.51cto.com/u_13691477/5285480?u_atoken=7191b043-e71f-47e9-9a20-406c7123199c&u_asession=011I3B7LqeU7Vgxce9cW-YeNt9Mr_BhkaBnS2HCF8TtCYWL6I-76FXHwLGwlH0kFcPX0KNBwm7Lovlpxjd_P_q4JsKWYrT3W_NKPr8w6oU7K_NrWEp19MRnJOMF2nWZWdsuT4_mMEKQlUPdsvGOBKcKWBkFo3NEHBv0PZUm6pbxQU&u_asig=05lxXAC_TjSr7lKdMUf-uqODT08gEIZPO03mgXMngemHOj_ptEjT0A8c7N8QcpebLuLhviuu8l4cQ0KCj9Dol2p8p2ewS37g_fVqtca_eFMnYm26cicxCwd7Jqsd_oDsUs9ENj9FschsgO5ifyFqkVxHP_d-GQKoPuRJfxMlNYvEH9JS7q8ZD7Xtz2Ly-b0kmuyAKRFSVJkkdwVUnyHAIJzaiTIMxAkYdP2TOkr3AEt5WeRx0AHfXEXkZdHcPAZzEuIoF2Chm-8MbxklAdjgzJjO3h9VXwMyh6PgyDIVSG1W_tgr1B_CODi2BKJn7R76l45wXlYElZ4cq7YXSAdlfppecD0GMD5D4vYYnlKHgbAVjEI0hpdOE9okpafLhFZq-ymWspDxyAEEo4kbsryBKb9Q&u_aref=yFcdfZXwlZmIR1hYDG9Kg5EHBUo%3D

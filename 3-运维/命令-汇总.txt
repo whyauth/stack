@@ -1,0 +1,47 @@
+
+nohup、rsync 、sh  命令
+
+查看linux相关命令
+========================================================
+ps -ef | grep nginx
+netstat -tunlp
+lsof -i :端口号
+
+win：
+	tasklist | findstr /i node.exe
+	tasklist /v | findstr /i node.exe
+	netstat -ano
+
+
+nginx rewrite：
+if (!-e $request_filename) {
+   rewrite  ^(.*)$  /index.php?s=$1  last;
+   break;
+}
+
+
+
+  
+mstsc： 远程链接windows主机  192.168.1.180 【代码、文档的主机】； 要使用lwzapp网关 
+ user: administrator
+ pwd : 1234567
+
+路由器：
+	http://192.168.58.1/ui/1.0.99.192968/dynamic/home.html
+	pwd: lwz12345678
+	
+	链接这个路由器端口的 Linux地址为： 192.168.58.232
+
+
+git@192.168.58.125 的git 用户密码是：jifencode123 【这个是在Linux服务器上搭建，免密登录用的】
+
+
+gogs 的管理员密码是  qujifen,  12345678
+临时启动服务：
+"D:\Program Files\GitServer\gogs\gogs_0.13.0_windows_amd64\gogs\gogs.exe" web
+
+
+mysql数据库更新密码：
+	update user set authentication_string=password("rootdb"),plugin='mysql_native_password' where user='root';
+	
+	ALTER user 'root'@'localhost' IDENTIFIED BY 'rootdb';  ----> 需进一步验证

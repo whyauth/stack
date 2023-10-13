@@ -1,0 +1,12 @@
+2023.08.28
+	1. 找到 GitLab - ce 社区版
+	2. https://packages.gitlab.com/gitlab/gitlab-ce
+	
+	3. https://www.cnblogs.com/xuruiming/p/13062000.html
+	   https://ken.io/note/centos7-gitlab-install-tutorial
+	   
+	   
+	   
+	   
+	   手动安装gitlab
+	   https://blog.csdn.net/u011630259/article/details/118916039

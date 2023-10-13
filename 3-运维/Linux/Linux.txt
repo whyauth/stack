@@ -1,0 +1,35 @@
+
+Red Hat（Centos、Fedora）
+Debian（Ubuntu）
+FreeBSD (FreeBSD是一种自由类Unix操作系统)
+Arch Linux
+
+
+GNU（操作系统和自由软件运动）
+GNOME（桌面环境系统）
+
+	
+	
+Fedora、Red Hat 和 CentOS 都是基于 Linux 的操作系统，它们之间有着密切的关系。以下是对它们之间关系和区别的简要说明：
+
+    Red Hat：Red Hat 是一个商业公司，开发和销售商业版的 Linux 操作系统 Red Hat Enterprise Linux（RHEL）。Red Hat 同时开发了一个社区版 Linux，称为 Fedora，它通常会包含一些最新的技术和功能，旨在吸引用户尝试新的功能和反馈意见。Red Hat 还维护了一个开源项目称为 Fedora Core，它被认为是 Red Hat 的一个预发布产品。
+    Fedora：Fedora 是一个由 Red Hat 主导的社区版 Linux 操作系统。它通常会包含一些最新的软件和技术，旨在推动 Linux 技术的发展。Fedora 项目由 Red Hat 公司和一些社区成员共同维护。由于 Fedora 通常包含最新的软件，因此它也可能会比其他基于 Red Hat 的发行版更加不稳定。
+    CentOS：CentOS 是一个基于 Red Hat Enterprise Linux（RHEL）的社区版 Linux 操作系统。它是由 Red Hat 发布的源代码重新编译而成的，旨在提供免费的、与 RHEL 兼容的版本。CentOS 项目旨在创建一个稳定、高可用和安全的企业级 Linux 发行版。由于 CentOS 是从 RHEL 的源代码编译而来，因此它与 RHEL 非常相似，但是不包含任何 Red Hat 的专有软件或商标。
+
+综上所述，Fedora、Red Hat 和 CentOS 之间的关系是：Red Hat 开发了 Fedora，Fedora 又为 CentOS 提供源代码，而 CentOS 是从 Red Hat 的 RHEL 的源代码重新编译而来。它们之间的区别在于 Fedora 包含最新的软件和技术，而 CentOS 则更注重稳定性和兼容性。
+
+=========================================================
+
+Linux发行版和分支非常多，以下是一些主要的发行版和分支：
+
+    Debian：一个基于Linux的自由和开放源代码的操作系统，适用于服务器、桌面和嵌入式设备。
+    Ubuntu：基于Debian的Linux发行版，主要用于个人电脑和服务器，以其易用性和社区支持而闻名。
+    Red Hat Enterprise Linux（RHEL）：一个面向企业用户的Linux发行版，主要用在服务器上面，是收费版本。
+    Fedora：基于Red Hat Linux终止发行后，Red Hat公司计划以Fedroa来取代Red Hat Linux在个人领域应用，是免费版。
+    CentOS（社区企业操作系统）：Red Hat Enterprise Linux的社区版，主要用于服务器和云环境。
+    openSUSE：由Novell发起的开源项目，目标创建一个易于使用且功能强大的操作系统。
+    Arch Linux：一个以简约和滚动发行版为特点的操作系统，提供最新的软件和工具。
+    Slackware：一个流行的Linux发行版，以其稳定性和老派风格受到用户的喜爱。
+    AlmaLinux：RHEL的下游Linux操作系统替代方案，继承了原CentOS的开源免费特点。
+
+以上是一些主要的Linux发行版和分支，每个发行版都有其自己的特点和优点，用户可以根据具体需求进行选择。

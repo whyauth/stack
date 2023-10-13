@@ -1,0 +1,19 @@
+
+1. 安装依赖
+	yum install -y fontconfig libX11 libXext libXrender libjpeg libpng xorg-x11-fonts-75dpi xorg-x11-fonts-Type1
+	
+2. 下载wkhtmltopdf
+	wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos7.x86_64.rpm
+	
+3. 解压wkhtmltopdf
+	rpm -ivh wkhtmltox-0.12.6-1.centos7.x86_64.rpm
+	
+4. 查看安装路径
+	whereis wkhtmltopdf
+	
+	
+
+
+
+	rpm -Uvh wkhtmltox-0.12.6-1.centos8.x86_64.rpm 是升级一个已存在的软件包。-U 是升级的参数，vh 则是加上虚拟终端（Verbose），以便提供更多的信息。
+	rpm -ivh wkhtmltox-0.12.6-1.centos8.x86_64.rpm 是安装一个新的软件包。-i 是安装的参数，vh 则是加上虚拟终端（Verbose），以便提供更多的信息。
